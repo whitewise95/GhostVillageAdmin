@@ -2,6 +2,7 @@ HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
+src/main/resources/application.yml
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -35,3 +36,4 @@ out/
 
 ### VS Code ###
 .vscode/
+ghostvillage-45d1b-firebase-adminsdk-ebow2-31025af5f4.json
