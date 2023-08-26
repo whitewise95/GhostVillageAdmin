@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header::header"></head>
+<script>
+
+  function create() {
+    let createForm = $("#createForm").serializeArray();
+    let param = {};
+
+    for (let i = 0; i < createForm.length; i++) {
+      param[createForm[i]['name']] = createForm[i]['value'];
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "/api/skill",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(param),
+      success: function (response) {
+        window.location.href = "/view/skill"
+      },
+      error: function (e) {
+        Swal.fire(e.responseJSON.message);
+      }
+    })
+  }
+
+</script>
+<body>
+<div class="d-flex" id="wrapper">
+  <div th:replace="layout/side::side"></div>
+  <div id="page-content-wrapper">
+    <!-- Top navigation-->
+    <nav th:replace="layout/top::top"></nav>
+    <div class="container-fluid">
+      <h1 class="mt-4">스킬 등록</h1>
+      <form id="createForm">
+        <div style="padding-bottom: 10px">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#statsType">능력치 선택
+          </button>
+
+          <div class="modal fade" id="statsType" data-bs-backdrop="static" data-bs-keyboard="false"
+               tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">능력치 타입을 선택해주세요.</h1>
+                </div>
+                <div class="modal-body" style="height: 50%">
+                  <select class="form-select" size="3" aria-label="Size 3 select example"
+                          th:name="statsType" style="height: 500px;">
+                    <option th:each="val : ${statsType}" th:value="${val?.code}"
+                            th:utext="${val?.name}"></option>
+                  </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택완료
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#elementType">속성 선택
+          </button>
+
+          <div class="modal fade" id="elementType" data-bs-backdrop="static"
+               data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2"
+               aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel2">속성 타입을 선택해주세요.</h1>
+                </div>
+                <div class="modal-body" style="height: 50%">
+                  <select class="form-select" size="3" aria-label="Size 3 select example"
+                          th:name="elementType" style="height: 100px;">
+                    <option th:each="val : ${elementType}" th:value="${val?.code}"
+                            th:utext="${val?.name}"></option>
+                  </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택완료
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-2 col-form-label">스킬명</label>
+          <div class="col-sm-10">
+            <input type="input" class="form-control" id="name" name="name">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="effectId" class="col-sm-2 col-form-label">스킬 이펙트 ID</label>
+          <div class="col-sm-10">
+            <input type="input" class="form-control" id="effectId" name="effectId">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="rank" class="col-sm-2 col-form-label">스킬등급</label>
+          <div class="col-sm-10">
+            <input type="input" class="form-control" id="rank" name="rank">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="coast" class="col-sm-2 col-form-label">코스트</label>
+          <div class="col-sm-10">
+            <input type="input" class="form-control" id="coast" name="coast">
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="value1" class="col-sm-2 col-form-label">value1 속성 값</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value1" name="value1">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value1Add" class="col-sm-2 col-form-label">value1의 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value1Add" name="value1Add">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value2" class="col-sm-2 col-form-label">value2 속성 값</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value2" name="value2">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value2Add" class="col-sm-2 col-form-label">value2의 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value2Add" name="value2Add">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value3" class="col-sm-2 col-form-label">value3 속성 값</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value3" name="value3">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value3Add" class="col-sm-2 col-form-label">value3의 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value3Add" name="value3Add">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value4" class="col-sm-2 col-form-label">value4 속성 값</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value4" name="value4">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="value4Add" class="col-sm-2 col-form-label">value4의 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="value4Add" name="value4Add">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="cool" class="col-sm-2 col-form-label">쿨타임</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="cool" name="cool">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="coolDec" class="col-sm-2 col-form-label">쿨타임 감소량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="coolDec" name="coolDec">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="time" class="col-sm-2 col-form-label">지속 시간</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="time" name="time">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="timeAdd" class="col-sm-2 col-form-label">지속 시간 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="timeAdd" name="timeAdd">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="size" class="col-sm-2 col-form-label">범위</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="size" name="size">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="sizeAdd" class="col-sm-2 col-form-label">범위 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="sizeAdd" name="sizeAdd">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="mana" class="col-sm-2 col-form-label">마나 소모량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="mana" name="mana">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="manaDec" class="col-sm-2 col-form-label">마나 소모량 감소량</label>
+          <div class="col-sm-10">
+            <input type="number" step="0.01" class="form-control" id="manaDec" name="manaDec">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="expCount" class="col-sm-2 col-form-label">스킬 숙련도 증가 횟수</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="expCount" name="expCount">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="expAdd" class="col-sm-2 col-form-label">숙련도 증가량</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="expAdd" name="expAdd">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="create()">등록</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
