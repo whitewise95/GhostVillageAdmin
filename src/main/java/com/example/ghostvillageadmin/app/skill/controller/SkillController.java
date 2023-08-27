@@ -36,7 +36,7 @@ public class SkillController {
 	@Operation(summary = "스킬 create view", hidden = true)
 	@GetMapping("/view/skill/create")
 	public ModelAndView viewSkillCreate(ModelAndView modelAndView) {
-		modelAndView.setViewName("/skill/create");
+		modelAndView.setViewName("skill/create");
 		modelAndView.addObject("elementType", ElementType.getList());
 		modelAndView.addObject("statsType", StatsType.getList());
 		return modelAndView;
@@ -46,7 +46,7 @@ public class SkillController {
 	@GetMapping("/view/skill/detail/{id}")
 	public ModelAndView viewSkillDetail(ModelAndView modelAndView,
 										@PathVariable Long id) {
-		modelAndView.setViewName("/skill/detail");
+		modelAndView.setViewName("skill/detail");
 		modelAndView.addObject("skill", skillService.getSkill(id));
 		modelAndView.addObject("elementType", ElementType.getList());
 		modelAndView.addObject("statsType", StatsType.getList());
