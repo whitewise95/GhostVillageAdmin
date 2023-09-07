@@ -1,6 +1,6 @@
 package com.example.ghostvillageadmin.app.skill.controller;
 
-import com.example.ghostvillageadmin.app.skill.domain.enums.ElementType;
+import com.example.ghostvillageadmin.app.skill.domain.enums.SkillElementType;
 import com.example.ghostvillageadmin.app.skill.domain.enums.StatsType;
 import com.example.ghostvillageadmin.app.skill.dto.SkillDto;
 import com.example.ghostvillageadmin.app.skill.service.SkillService;
@@ -37,7 +37,7 @@ public class SkillController {
 	@GetMapping("/view/skill/create")
 	public ModelAndView viewSkillCreate(ModelAndView modelAndView) {
 		modelAndView.setViewName("skill/create");
-		modelAndView.addObject("elementType", ElementType.getList());
+		modelAndView.addObject("elementType", SkillElementType.getList());
 		modelAndView.addObject("statsType", StatsType.getList());
 		return modelAndView;
 	}
@@ -48,7 +48,7 @@ public class SkillController {
 										@PathVariable Long id) {
 		modelAndView.setViewName("skill/detail");
 		modelAndView.addObject("skill", skillService.getSkill(id));
-		modelAndView.addObject("elementType", ElementType.getList());
+		modelAndView.addObject("elementType", SkillElementType.getList());
 		modelAndView.addObject("statsType", StatsType.getList());
 		return modelAndView;
 	}
