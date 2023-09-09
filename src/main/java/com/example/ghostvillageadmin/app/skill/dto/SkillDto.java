@@ -1,6 +1,6 @@
 package com.example.ghostvillageadmin.app.skill.dto;
 
-import com.example.ghostvillageadmin.app.skill.domain.enums.ElementType;
+import com.example.ghostvillageadmin.app.skill.domain.enums.SkillElementType;
 import com.example.ghostvillageadmin.app.skill.domain.enums.StatsType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +30,7 @@ public class SkillDto {
 		private Integer coast;
 
 		@Schema(description = "스킬 속성")
-		private ElementType elementType;
+		private SkillElementType skillElementType;
 
 		@Schema(description = "능력치 유형")
 		private StatsType statsType;
@@ -118,7 +118,7 @@ public class SkillDto {
 
 		@NotNull(message = "스킬 속성 입력해주세요.")
 		@Schema(description = "스킬 속성")
-		private ElementType elementType;
+		private SkillElementType skillElementType;
 
 		@NotNull(message = "능력치 유형 입력해주세요.")
 		@Schema(description = "능력치 유형")
