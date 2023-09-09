@@ -90,7 +90,7 @@
                 <div class="modal-body" style="height: 50%">
                   <select class="form-select" size="3" aria-label="Size 3 select example"
                           th:name="elementType" style="height: 100px;">
-                    <option th:each="val : ${elementType}"  th:selected="${val?.code == skill.elementType.name()}"  th:value="${val.code}" th:utext="${val?.name}"></option>
+                    <option th:each="val : ${elementType}" th:selected="${val?.code == skill.getSkillElementType.name()}" th:value="${val.code}" th:utext="${val?.name}"></option>
                   </select>
                 </div>
                 <div class="modal-footer">
