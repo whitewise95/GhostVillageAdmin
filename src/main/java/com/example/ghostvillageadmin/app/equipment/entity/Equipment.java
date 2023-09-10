@@ -2,13 +2,14 @@ package com.example.ghostvillageadmin.app.equipment.entity;
 
 import com.example.ghostvillageadmin.app.equipment.entity.enums.*;
 import com.example.ghostvillageadmin.base.BaseDomainWithId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 장비
@@ -38,4 +39,16 @@ public class Equipment extends BaseDomainWithId {
     @NotNull
     @Comment("촤종 강화효과 수치")
     private Float enforceLastValue;
+
+    /**
+     * 속성 목록
+     * */
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EquipmentElement> equipmentElementList = new HashSet<>();
+
+    /**
+     * 스탯 목록
+     * */
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EquipmentStat> equipmentStatList = new HashSet<>();
 }
