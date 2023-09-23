@@ -4,54 +4,156 @@
 
 <script>
 
-    let count = 2;
+    let statCount = 2;
+    let elementCount = 2;
+
 
     function addStat() {
-        let html = `  <div class="accordion-item" id="statDetail${count}">
+        $.ajax({
+            type: "GET",
+            url: "/api/equipment/stat-type",
+            success: function (res) {
+                let html = `  <div class="accordion-item" id="statDetail${statCount}">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statDetailAccordion-${count}" aria-expanded="true" aria-controls="statDetailAccordion-${count}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statDetailAccordion-${statCount}" aria-expanded="true" aria-controls="statDetailAccordion-${statCount}">
                                 능력치
                             </button>
                         </h2>
-                        <div id="statDetailAccordion-${count}" class="accordion-collapse collapse show">
+                        <div id="statDetailAccordion-${statCount}" class="accordion-collapse collapse show">
                             <div class="accordion-body">
                                 <div class="mb-3 row">
-                                    <label for="lastType${count}">능력치 타입</label>
+                                    <label for="lastType${statCount}">능력치 타입</label>
                                     <select class="form-select" size="3" aria-label="Size 3 select example"
-                                            id="statType${count}" th:name="statType" style="height: 100px;">
-                                        <option th:each="val : [[${statType}]]" th:value="[[${val?.code}]]"
-                                                th:utext="[[${val?.name}]]"></option>
+                                            id="statType${statCount}" name="statType" style="height: 100px;">
+
                                     </select>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="stat${count}" class="col-sm-2 col-form-label">능력치</label>
+                                    <label for="stat${statCount}" class="col-sm-2 col-form-label">능력치</label>
                                     <div class="col-sm-10">
-                                        <input type="number" step="0.01" class="form-control" id="stat${count}" name="stat">
+                                        <input type="number" step="0.01" class="form-control" id="stat${statCount}" name="stat">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="statIncrease${count}" class="col-sm-2 col-form-label">능력치 증가폭</label>
+                                    <label for="statIncrease${statCount}" class="col-sm-2 col-form-label">능력치 증가폭</label>
                                     <div class="col-sm-10">
-                                        <input type="number" step="0.01" class="form-control" id="statIncrease${count}"
+                                        <input type="number" step="0.01" class="form-control" id="statIncrease${statCount}"
                                                name="statIncrease">
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-danger" onclick="removeStat(${count})" >삭제</button>
+                                <button type="button" class="btn btn-danger" onclick="removeStat(${statCount})" >삭제</button>
                             </div>
                         </div>
                     </div>`
 
+                $("#statDetailAccordion").append(html);
 
-        $("#statDetailAccordion").append(html);
-
-        count++
+                let optionHtml = "";
+                for (const re of res) {
+                    optionHtml += `<option  value="${re.code}">${re.name}</option>`
+                }
+                $("#statDetail" + statCount).find(".form-select").append(optionHtml);
+                statCount++
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패.")
+            }
+        });
     }
 
-    function removeStat(statCount){
-        let id = "#statDetail" + statCount;
-        debugger
+    function addElement() {
+        $.ajax({
+            type: "GET",
+            url: "/api/equipment/element-types",
+            success: function (res) {
+                let html = `
+                 <div class="accordion-item" id="elementDetail${elementCount}">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#elementDetailAccordion-${elementCount}" aria-expanded="true"
+                                                    aria-controls="elementDetailAccordion-${elementCount}">
+                                                능력치
+                                            </button>
+                                        </h2>
+                                        <div id="elementDetailAccordion-${elementCount}" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="mb-3 row">
+                                                    <label for="lastType">속성타입</label>
+                                                    <select class="form-select-equipmentElementType" size="3"
+                                                            aria-label="Size 3 select example"
+                                                            id="equipmentElementType${elementCount}" th:name="statType" style="height: 100px;">
+
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="lastType">속성 능력치 타입</label>
+                                                    <select class="form-select-equipmentElementStatType" size="3"
+                                                            aria-label="Size 3 select example"
+                                                            id="equipmentElementStatType${elementCount}" th:name="statType" style="height: 100px;">
+
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">수치</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control" id="value${elementCount}"
+                                                               name="value">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">수치증가폭</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control" id="valueIncrease${elementCount}"
+                                                               name="valueIncrease">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">속성내성</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control" id="resistVale${elementCount}"
+                                                               name="resistVale">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">속성내성 증가폭</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control" id="resistValeIncrease${elementCount}"
+                                                               name="resistValeIncrease">
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-danger" onclick="removeElement(${elementCount})">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                `
+
+                $("#elementDetailAccordion").append(html);
+                debugger
+                let optionHtml = "";
+                for (const re of res["equipmentElementType"]) {
+                    optionHtml += `<option  value="${re.code}">${re.name}</option>`
+                }
+                $("#elementDetail" + elementCount).find(".form-select-equipmentElementType").append(optionHtml);
+
+                optionHtml = ""
+                for (const re of res["equipmentElementStatType"]) {
+                    optionHtml += `<option  value="${re.code}">${re.name}</option>`
+                }
+                $("#elementDetail" + elementCount).find(".form-select-equipmentElementStatType").append(optionHtml);
+                elementCount++
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("통신 실패.")
+            }
+        });
+    }
+
+    function removeStat(count) {
+        let id = "#statDetail" + count;
         let htmlCount = 0;
-        for (i = 1; i <= count; i++) {
+        for (i = 1; i <= statCount; i++) {
             if ($("#statDetailAccordion-" + i)[0] != undefined) {
                 htmlCount++;
             }
@@ -61,7 +163,24 @@
             Swal.fire("한개이상 스탯은 존재해야합니다.");
         } else {
             $(id).remove();
-            count--
+            // elementCount--
+        }
+    }
+
+    function removeElement(count) {
+        let id = "#elementDetail" + count;
+        let htmlCount = 0;
+        for (i = 1; i <= elementCount; i++) {
+            if ($("#elementDetailAccordion-" + i)[0] != undefined) {
+                htmlCount++;
+            }
+        }
+
+        if (htmlCount < 2) {
+            Swal.fire("한개이상 속성은 존재해야합니다.");
+        } else {
+            $(id).remove();
+            // elementCount--
         }
     }
 
@@ -204,12 +323,15 @@
                         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
                             <div class="accordion-body" id="stat-accordion">
                                 <div class="d-flex flex-row-reverse">
-                                    <button type="button" class="btn btn-success mb-5 p-2" onclick="addStat()">스탯 추가</button>
+                                    <button type="button" class="btn btn-success mb-5 p-2" onclick="addStat()">스탯 추가
+                                    </button>
                                 </div>
                                 <div class="accordion" id="statDetailAccordion">
-                                    <div class="accordion-item"  id="statDetail1">
+                                    <div class="accordion-item" id="statDetail1">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statDetailAccordion-1" aria-expanded="true" aria-controls="statDetailAccordion-1">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#statDetailAccordion-1" aria-expanded="true"
+                                                    aria-controls="statDetailAccordion-1">
                                                 능력치
                                             </button>
                                         </h2>
@@ -217,7 +339,8 @@
                                             <div class="accordion-body">
                                                 <div class="mb-3 row">
                                                     <label for="lastType">능력치 타입</label>
-                                                    <select class="form-select" size="3" aria-label="Size 3 select example"
+                                                    <select class="form-select" size="3"
+                                                            aria-label="Size 3 select example"
                                                             id="statType" th:name="statType" style="height: 100px;">
                                                         <option th:each="val : ${statType}" th:value="${val?.code}"
                                                                 th:utext="${val?.name}"></option>
@@ -226,17 +349,22 @@
                                                 <div class="mb-3 row">
                                                     <label for="stat" class="col-sm-2 col-form-label">능력치</label>
                                                     <div class="col-sm-10">
-                                                        <input type="number" step="0.01" class="form-control" id="stat" name="stat">
+                                                        <input type="number" step="0.01" class="form-control" id="stat"
+                                                               name="stat">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label for="statIncrease" class="col-sm-2 col-form-label">능력치 증가폭</label>
+                                                    <label for="statIncrease" class="col-sm-2 col-form-label">능력치
+                                                        증가폭</label>
                                                     <div class="col-sm-10">
-                                                        <input type="number" step="0.01" class="form-control" id="statIncrease"
+                                                        <input type="number" step="0.01" class="form-control"
+                                                               id="statIncrease"
                                                                name="statIncrease">
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn btn-danger" onclick="removeStat(1)">삭제</button>
+                                                <button type="button" class="btn btn-danger" onclick="removeStat(1)">
+                                                    삭제
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -246,18 +374,93 @@
                     </div>
                     <div class="accordion-item mb-3">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseThree">
                                 속성
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
                             <div class="accordion-body">
-
+                                <div class="d-flex flex-row-reverse">
+                                    <button type="button" class="btn btn-success mb-5 p-2" onclick="addElement()">속성추가
+                                    </button>
+                                </div>
+                                <div class="accordion" id="elementDetailAccordion">
+                                    <div class="accordion-item" id="elementDetail1">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#elementDetailAccordion-1" aria-expanded="true"
+                                                    aria-controls="elementDetailAccordion-1">
+                                                능력치
+                                            </button>
+                                        </h2>
+                                        <div id="elementDetailAccordion-1" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="mb-3 row">
+                                                    <label for="lastType">속성타입</label>
+                                                    <select class="form-select" size="3"
+                                                            aria-label="Size 3 select example"
+                                                            id="equipmentElementType" th:name="equipmentElementType"
+                                                            style="height: 100px;">
+                                                        <option th:each="val : ${equipmentElementType}"
+                                                                th:value="${val?.code}"
+                                                                th:utext="${val?.name}"></option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="lastType">속성 능력치 타입</label>
+                                                    <select class="form-select" size="3"
+                                                            aria-label="Size 3 select example"
+                                                            id="equipmentElementStatType" th:name="equipmentElementStatType"
+                                                            style="height: 100px;">
+                                                        <option th:each="val : ${equipmentElementStatType}"
+                                                                th:value="${val?.code}"
+                                                                th:utext="${val?.name}"></option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">수치</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control" id="value"
+                                                               name="value">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">수치증가폭</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control"
+                                                               id="valueIncrease"
+                                                               name="valueIncrease">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">속성내성</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control"
+                                                               id="resistVale"
+                                                               name="resistVale">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="stat" class="col-sm-2 col-form-label">속성내성 증가폭</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" step="0.01" class="form-control"
+                                                               id="resistValeIncrease"
+                                                               name="resistValeIncrease">
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-danger" onclick="removeElement(1)">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <button type="button" class="btn btn-primary" onclick="create()">등록</button>
             </form>
         </div>
