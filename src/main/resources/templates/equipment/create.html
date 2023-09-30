@@ -13,7 +13,7 @@
             type: "GET",
             url: "/api/equipment/stat-type",
             success: function (res) {
-                let html = `  <div class="accordion-item" id="statDetail${statCount}">
+                let html = `  <div class="accordion-item statsInput" id="statDetail${statCount}">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statDetailAccordion-${statCount}" aria-expanded="true" aria-controls="statDetailAccordion-${statCount}">
                                 능력치
@@ -184,27 +184,48 @@
         }
     }
 
-    // function create() {
-    //     let createForm = $("#createForm").serializeArray();
-    //     let param = {};
-    //
-    //     for (let i = 0; i < createForm.length; i++) {
-    //         param[createForm[i]['name']] = createForm[i]['value'];
-    //     }
-    //
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/api/skill",
-    //         contentType: "application/json; charset=utf-8",
-    //         data: JSON.stringify(param),
-    //         success: function (response) {
-    //             window.location.href = "/view/skill"
-    //         },
-    //         error: function (e) {
-    //             Swal.fire(e.responseJSON.message);
-    //         }
-    //     })
-    // }
+    function create() {
+        let createForm = $("#createForm").serializeArray();
+        let param = {};
+
+        let statList = [];
+        let elementList = [];
+
+        param["statsList"] = statList;
+        param["elementList"] = elementList;
+
+        const statElements = document.querySelectorAll('.statsInput');
+
+        for (let i = 0; i < createForm.length; i++) {
+
+            if (createForm[i]['name']=== "stat" || createForm[i]['name'] === "statIncrease" || createForm[i]['name'] === "statType") {
+                let stats = {};
+                stats[createForm[i]['name']] = createForm[i]['value'];
+                statList.push(stats);
+            } else if (createForm[i]['name'] === "value" || createForm[i]['name'] === "valueIncrease" || createForm[i]['name'] === "resistVale") {
+                let element = {};
+                element[createForm[i]['name']] = createForm[i]['value'];
+                elementList.push(element);
+            }
+            param[createForm[i]['name']] = createForm[i]['value'];
+        }
+        debugger
+        console.log(param)
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/api/skill",
+        //     contentType: "application/json; charset=utf-8",
+        //     data: JSON.stringify(param),
+        //     success: function (response) {
+        //         window.location.href = "/view/skill"
+        //     },
+        //     error: function (e) {
+        //         Swal.fire(e.responseJSON.message);
+        //     }
+        // })
+    }
+
 
 </script>
 <body>
@@ -216,62 +237,6 @@
         <div class="container-fluid">
             <h1 class="mt-4">장비 등록</h1>
             <form id="createForm">
-                <!--                <div style="padding-bottom: 10px">-->
-                <!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
-                <!--                            data-bs-target="#statsType">능력치 선택-->
-                <!--                    </button>-->
-
-                <!--                    <div class="modal fade" id="statsType" data-bs-backdrop="static" data-bs-keyboard="false"-->
-                <!--                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
-                <!--                        <div class="modal-dialog modal-dialog-scrollable">-->
-                <!--                            <div class="modal-content">-->
-                <!--                                <div class="modal-header">-->
-                <!--                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">능력치 타입을 선택해주세요.</h1>-->
-                <!--                                </div>-->
-                <!--                                <div class="modal-body" style="height: 50%">-->
-                <!--                                    <select class="form-select" size="3" aria-label="Size 3 select example"-->
-                <!--                                            th:name="statsType" style="height: 500px;">-->
-                <!--                                        <option th:each="val : ${statsType}" th:value="${val?.code}"-->
-                <!--                                                th:utext="${val?.name}"></option>-->
-                <!--                                    </select>-->
-                <!--                                </div>-->
-                <!--                                <div class="modal-footer">-->
-                <!--                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택완료-->
-                <!--                                    </button>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-
-                <!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
-                <!--                            data-bs-target="#elementType">속성 선택-->
-                <!--                    </button>-->
-
-                <!--                    <div class="modal fade" id="elementType" data-bs-backdrop="static"-->
-                <!--                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2"-->
-                <!--                         aria-hidden="true">-->
-                <!--                        <div class="modal-dialog modal-dialog-scrollable">-->
-                <!--                            <div class="modal-content">-->
-                <!--                                <div class="modal-header">-->
-                <!--                                    <h1 class="modal-title fs-5" id="staticBackdropLabel2">속성 타입을 선택해주세요.</h1>-->
-                <!--                                </div>-->
-                <!--                                <div class="modal-body" style="height: 50%">-->
-                <!--                                    <select class="form-select" size="3" aria-label="Size 3 select example"-->
-                <!--                                            th:name="elementType" style="height: 100px;">-->
-                <!--                                        <option th:each="val : ${elementType}" th:value="${val?.code}"-->
-                <!--                                                th:utext="${val?.name}"></option>-->
-                <!--                                    </select>-->
-                <!--                                </div>-->
-                <!--                                <div class="modal-footer">-->
-                <!--                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택완료-->
-                <!--                                    </button>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -312,7 +277,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item">
+                    <div class="accordion-item" >
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
@@ -387,7 +352,7 @@
                                     </button>
                                 </div>
                                 <div class="accordion" id="elementDetailAccordion">
-                                    <div class="accordion-item" id="elementDetail1">
+                                    <div class="accordion-item statsInput" id="elementDetail1" >
                                         <h2 class="accordion-header">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#elementDetailAccordion-1" aria-expanded="true"
@@ -412,7 +377,8 @@
                                                     <label for="lastType">속성 능력치 타입</label>
                                                     <select class="form-select" size="3"
                                                             aria-label="Size 3 select example"
-                                                            id="equipmentElementStatType" th:name="equipmentElementStatType"
+                                                            id="equipmentElementStatType"
+                                                            th:name="equipmentElementStatType"
                                                             style="height: 100px;">
                                                         <option th:each="val : ${equipmentElementStatType}"
                                                                 th:value="${val?.code}"

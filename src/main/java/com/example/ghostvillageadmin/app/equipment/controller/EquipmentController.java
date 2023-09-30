@@ -1,15 +1,19 @@
 package com.example.ghostvillageadmin.app.equipment.controller;
 
+import com.example.ghostvillageadmin.app.equipment.dto.EquipmentDto;
 import com.example.ghostvillageadmin.app.equipment.entity.EquipmentStat;
 import com.example.ghostvillageadmin.app.equipment.entity.enums.*;
 import com.example.ghostvillageadmin.app.equipment.service.EquipmentService;
 import com.example.ghostvillageadmin.app.skill.dto.EnumDto;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -48,5 +52,13 @@ public class EquipmentController {
         responseMap.put("equipmentElementType", EquipmentElementType.getList());
         responseMap.put("equipmentElementStatType", EquipmentElementStatType.getList());
         return ResponseEntity.ok(responseMap);
+    }
+
+    @ResponseBody
+    @Operation(summary = "장비등록")
+    @PostMapping("/api/equipment")
+    public void create(@RequestBody @Valid EquipmentDto.Create create) {
+        System.out.println("sadasd");
+
     }
 }
