@@ -2,10 +2,14 @@ package com.example.ghostvillageadmin.app.equipment.dto;
 
 import com.example.ghostvillageadmin.app.equipment.entity.enums.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EquipmentDto {
 
@@ -106,6 +110,24 @@ public class EquipmentDto {
         @Schema(description = "이미지고유번호")
         private Integer imageId;
 
+        @Schema(description = "스탯목록")
+        private List<@Valid CreateStats> statsList = new ArrayList<>();
+
+        @Schema(description = "속성목록")
+        private List<@Valid CreateElement> elementList = new ArrayList<>();
+
+        @NotNull(message = "최종 강화효과 타입을 선택해주세요.")
+        @Schema(description = "최종 강화효과 타입")
+        private EnforceLastType lastType;
+
+        @NotNull(message = "촤종 강화효과 수치를 입력해주세요.")
+        @Schema(description = "촤종 강화효과 수치")
+        private Float last;
+    }
+
+    @Getter
+    @Setter
+    public static class CreateStats {
         @NotNull(message = "능력치 타입을 선택해주세요.")
         @Schema(description = "능력치 타입")
         private StatType statType;
@@ -117,15 +139,11 @@ public class EquipmentDto {
         @NotNull(message = "능력치증가폭을 입력해주세요.")
         @Schema(description = "능력치증가폭")
         private Float statAdd;
+    }
 
-        @NotNull(message = "마나를 입력해주세요.")
-        @Schema(description = "마나")
-        private Float mp;
-
-        @NotNull(message = "마나 증가폭을 입력해주세요")
-        @Schema(description = "마나 증가폭")
-        private Float mpAdd;
-
+    @Getter
+    @Setter
+    public static class CreateElement {
         @NotNull(message = "속성타입을 선택해주세요.")
         @Schema(description = "속성타입")
         private EquipmentElementType elementType;
@@ -149,14 +167,6 @@ public class EquipmentDto {
         @NotNull(message = "속성내성 증가폭을 입력해주세요.")
         @Schema(description = "속성내성 증가폭")
         private Float resistAdd;
-
-        @NotNull(message = "최종 강화효과 타입을 선택해주세요.")
-        @Schema(description = "최종 강화효과 타입")
-        private EnforceLastType lastType;
-
-        @NotNull(message = "촤종 강화효과 수치를 입력해주세요.")
-        @Schema(description = "촤종 강화효과 수치")
-        private Float last;
     }
 
     @Getter
