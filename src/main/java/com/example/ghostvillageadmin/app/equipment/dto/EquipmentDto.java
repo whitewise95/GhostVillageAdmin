@@ -4,6 +4,7 @@ import com.example.ghostvillageadmin.app.equipment.entity.enums.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -111,9 +112,11 @@ public class EquipmentDto {
         private Integer imageId;
 
         @Schema(description = "스탯목록")
+        @NotEmpty(message = "최소 하나의 스탯은 존재해야합니다.")
         private List<@Valid CreateStats> statsList = new ArrayList<>();
 
         @Schema(description = "속성목록")
+        @NotEmpty(message = "최소 하나의 속성은 존재해야합니다.")
         private List<@Valid CreateElement> elementList = new ArrayList<>();
 
         @NotNull(message = "최종 강화효과 타입을 선택해주세요.")
@@ -158,15 +161,15 @@ public class EquipmentDto {
 
         @NotNull(message = "속성수치 증가폭을 입력해주세요.")
         @Schema(description = "속성수치 증가폭")
-        private Float valueAdd;
+        private Float valueIncrease;
 
         @NotNull(message = "속성내성을 입력해주세요.")
         @Schema(description = "속성내성")
-        private Float resist;
+        private Float resistValue;
 
         @NotNull(message = "속성내성 증가폭을 입력해주세요.")
         @Schema(description = "속성내성 증가폭")
-        private Float resistAdd;
+        private Float resistValueIncrease;
     }
 
     @Getter

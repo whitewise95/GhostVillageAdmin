@@ -58,7 +58,6 @@ public class EquipmentController {
     @Operation(summary = "장비등록")
     @PostMapping("/api/equipment")
     public void create(@RequestBody @Valid EquipmentDto.Create create) {
-        System.out.println("sadasd");
-
+        equipmentService.create(create);
     }
 }

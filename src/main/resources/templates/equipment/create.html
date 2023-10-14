@@ -67,7 +67,7 @@
             url: "/api/equipment/element-types",
             success: function (res) {
                 let html = `
-                 <div class="accordion-item" id="elementDetail${elementCount}">
+                 <div class="accordion-item elementsInput" id="elementDetail${elementCount}">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#elementDetailAccordion-${elementCount}" aria-expanded="true"
@@ -81,7 +81,7 @@
                                                     <label for="lastType">속성타입</label>
                                                     <select class="form-select-equipmentElementType" size="3"
                                                             aria-label="Size 3 select example"
-                                                            id="equipmentElementType${elementCount}" th:name="statType" style="height: 100px;">
+                                                            id="equipmentElementType${elementCount}" th:name="equipmentElementType" style="height: 100px;">
 
                                                     </select>
                                                 </div>
@@ -89,7 +89,7 @@
                                                     <label for="lastType">속성 능력치 타입</label>
                                                     <select class="form-select-equipmentElementStatType" size="3"
                                                             aria-label="Size 3 select example"
-                                                            id="equipmentElementStatType${elementCount}" th:name="statType" style="height: 100px;">
+                                                            id="equipmentElementStatType${elementCount}" th:name="equipmentElementStatType" style="height: 100px;">
 
                                                     </select>
                                                 </div>
@@ -110,15 +110,15 @@
                                                 <div class="mb-3 row">
                                                     <label for="stat" class="col-sm-2 col-form-label">속성내성</label>
                                                     <div class="col-sm-10">
-                                                        <input type="number" step="0.01" class="form-control" id="resistVale${elementCount}"
-                                                               name="resistVale">
+                                                        <input type="number" step="0.01" class="form-control" id="resistValue${elementCount}"
+                                                               name="resistValue">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label for="stat" class="col-sm-2 col-form-label">속성내성 증가폭</label>
                                                     <div class="col-sm-10">
-                                                        <input type="number" step="0.01" class="form-control" id="resistValeIncrease${elementCount}"
-                                                               name="resistValeIncrease">
+                                                        <input type="number" step="0.01" class="form-control" id="resistValueIncrease${elementCount}"
+                                                               name="resistValueIncrease">
                                                     </div>
                                                 </div>
                                                 <button type="button" class="btn btn-danger" onclick="removeElement(${elementCount})">
@@ -194,36 +194,61 @@
         param["statsList"] = statList;
         param["elementList"] = elementList;
 
-        const statElements = document.querySelectorAll('.statsInput');
+        $('.statsInput').each(function(index) {
+            var statType = $(this).find('select.form-select').val();
+            var stat = parseFloat($(this).find('input[name="stat"]').val());
+            var statAdd = parseFloat($(this).find('input[name="statIncrease"]').val());
+
+            // 데이터를 JavaScript 객체로 매핑
+            var statData = {
+                statType: statType,
+                stat: stat,
+                statAdd: statAdd
+            };
+
+            // 배열에 추가
+            statList.push(statData);
+        });
+
+        $('.elementsInput').each(function(index) {
+            debugger
+            var elementType = $(this).find('select.form-select-equipmentElementType').val();
+            var elementStatType = $(this).find('select.form-select-equipmentElementStatType').val();
+            var value = parseFloat($(this).find('input[name="value"]').val());
+            var valueIncrease = parseFloat($(this).find('input[name="valueIncrease"]').val());
+            var resistValue = parseFloat($(this).find('input[name="resistValue"]').val());
+            var resistValueIncrease = parseFloat($(this).find('input[name="resistValueIncrease"]').val());
+
+            // 데이터를 JavaScript 객체로 매핑
+            var elementData = {
+                elementType: elementType,
+                elementStatType: elementStatType,
+                value: value,
+                valueIncrease: valueIncrease,
+                resistValue: resistValue,
+                resistValueIncrease: resistValueIncrease
+            };
+
+            // 배열에 추가
+            elementList.push(elementData);
+        });
 
         for (let i = 0; i < createForm.length; i++) {
-
-            if (createForm[i]['name']=== "stat" || createForm[i]['name'] === "statIncrease" || createForm[i]['name'] === "statType") {
-                let stats = {};
-                stats[createForm[i]['name']] = createForm[i]['value'];
-                statList.push(stats);
-            } else if (createForm[i]['name'] === "value" || createForm[i]['name'] === "valueIncrease" || createForm[i]['name'] === "resistVale") {
-                let element = {};
-                element[createForm[i]['name']] = createForm[i]['value'];
-                elementList.push(element);
-            }
             param[createForm[i]['name']] = createForm[i]['value'];
         }
-        debugger
-        console.log(param)
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/api/skill",
-        //     contentType: "application/json; charset=utf-8",
-        //     data: JSON.stringify(param),
-        //     success: function (response) {
-        //         window.location.href = "/view/skill"
-        //     },
-        //     error: function (e) {
-        //         Swal.fire(e.responseJSON.message);
-        //     }
-        // })
+        $.ajax({
+            type: "POST",
+            url: "/api/equipment",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(param),
+            success: function (response) {
+                window.location.href = "/view/skill"
+            },
+            error: function (e) {
+                Swal.fire(e.responseJSON.message);
+            }
+        })
     }
 
 
@@ -263,8 +288,16 @@
                                 <div class="mb-3 row">
                                     <label for="lastType">능력치 타입</label>
                                     <select class="form-select" size="3" aria-label="Size 3 select example"
-                                            id="lastType" th:name="enforceLastType" style="height: 100px;">
+                                            id="lastType" th:name="lastType" style="height: 100px;">
                                         <option th:each="val : ${enforceLastType}" th:value="${val?.code}"
+                                                th:utext="${val?.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="rankType">등급</label>
+                                    <select class="form-select" size="3" aria-label="Size 3 select example"
+                                            id="rankType" th:name="rankType" style="height: 100px;">
+                                        <option th:each="val : ${equipmentRankType}" th:value="${val?.code}"
                                                 th:utext="${val?.name}"></option>
                                     </select>
                                 </div>
@@ -292,7 +325,7 @@
                                     </button>
                                 </div>
                                 <div class="accordion" id="statDetailAccordion">
-                                    <div class="accordion-item" id="statDetail1">
+                                    <div class="accordion-item statsInput" id="statDetail1">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#statDetailAccordion-1" aria-expanded="true"
@@ -352,7 +385,7 @@
                                     </button>
                                 </div>
                                 <div class="accordion" id="elementDetailAccordion">
-                                    <div class="accordion-item statsInput" id="elementDetail1" >
+                                    <div class="accordion-item elementsInput" id="elementDetail1" >
                                         <h2 class="accordion-header">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#elementDetailAccordion-1" aria-expanded="true"
@@ -364,7 +397,7 @@
                                             <div class="accordion-body">
                                                 <div class="mb-3 row">
                                                     <label for="lastType">속성타입</label>
-                                                    <select class="form-select" size="3"
+                                                    <select class="form-select-equipmentElementType" size="3"
                                                             aria-label="Size 3 select example"
                                                             id="equipmentElementType" th:name="equipmentElementType"
                                                             style="height: 100px;">
@@ -375,7 +408,7 @@
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label for="lastType">속성 능력치 타입</label>
-                                                    <select class="form-select" size="3"
+                                                    <select class="form-select-equipmentElementStatType" size="3"
                                                             aria-label="Size 3 select example"
                                                             id="equipmentElementStatType"
                                                             th:name="equipmentElementStatType"
@@ -404,16 +437,16 @@
                                                     <label for="stat" class="col-sm-2 col-form-label">속성내성</label>
                                                     <div class="col-sm-10">
                                                         <input type="number" step="0.01" class="form-control"
-                                                               id="resistVale"
-                                                               name="resistVale">
+                                                               id="resistValue"
+                                                               name="resistValue">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label for="stat" class="col-sm-2 col-form-label">속성내성 증가폭</label>
                                                     <div class="col-sm-10">
                                                         <input type="number" step="0.01" class="form-control"
-                                                               id="resistValeIncrease"
-                                                               name="resistValeIncrease">
+                                                               id="resistValueIncrease"
+                                                               name="resistValueIncrease">
                                                     </div>
                                                 </div>
                                                 <button type="button" class="btn btn-danger" onclick="removeElement(1)">

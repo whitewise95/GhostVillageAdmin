@@ -37,11 +37,11 @@ public class EquipmentElement extends BaseDomainWithId {
 
     @NotNull
     @Comment("속성내성")
-    private Float resistVale;
+    private Float resistValue;
 
     @NotNull
     @Comment("속성내성 증가폭")
-    private Float resistValeIncrease;
+    private Float resistValueIncrease;
 
     @NotNull
     @Comment("장비 고유 번호")
