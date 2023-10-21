@@ -32,6 +32,7 @@
 
 
   function remove(id) {
+    this.event.stopPropagation();
     $.ajax({
       type: "DELETE",
       url: "/api/equipment/" + id,
@@ -75,7 +76,7 @@
             <td><span th:text="${list.image_id}"></span></td>
             <td><span th:text="${list.rank_type}"></span></td>
             <td><span th:text="${list.getLast_type().getLabel()}"></span></td>
-            <td><button type="button" class="btn btn-primary" th:onclick="remove([[${list.id}]])">삭제</button></td>
+            <button type="button" class="btn btn-primary" th:onclick="remove([[${list.id}]])">삭제</button>
           </tr>
           </tbody>
         </table>
