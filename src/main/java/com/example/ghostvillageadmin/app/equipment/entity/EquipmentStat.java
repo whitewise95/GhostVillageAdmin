@@ -3,6 +3,8 @@ package com.example.ghostvillageadmin.app.equipment.entity;
 import com.example.ghostvillageadmin.app.equipment.entity.enums.StatType;
 import com.example.ghostvillageadmin.base.BaseDomainWithId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +22,7 @@ public class EquipmentStat extends BaseDomainWithId {
 
     @NotNull
     @Comment("능력치 타입")
+    @Enumerated(EnumType.STRING)
     private StatType statType;
 
     @NotNull

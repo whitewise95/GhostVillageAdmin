@@ -4,10 +4,12 @@ import com.example.ghostvillageadmin.app.skill.dto.EnumDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 /**
  * 장비 등급
  */
+@Getter
 public enum EquipmentRankType {
     NORMAL(1),
     RARE(2),

@@ -30,7 +30,7 @@ public class SkillDto {
 		private Integer coast;
 
 		@Schema(description = "스킬 속성")
-		private SkillElementType skillElementType;
+		private SkillElementType elementType;
 
 		@Schema(description = "능력치 유형")
 		private StatsType statsType;
@@ -118,7 +118,7 @@ public class SkillDto {
 
 		@NotNull(message = "스킬 속성 입력해주세요.")
 		@Schema(description = "스킬 속성")
-		private SkillElementType skillElementType;
+		private SkillElementType elementType;
 
 		@NotNull(message = "능력치 유형 입력해주세요.")
 		@Schema(description = "능력치 유형")

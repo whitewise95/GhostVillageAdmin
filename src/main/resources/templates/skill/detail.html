@@ -25,19 +25,6 @@
     })
   }
 
-  function remove(id) {
-    $.ajax({
-      type: "DELETE",
-      url: "/api/skill/" + id,
-      success: function (response) {
-        window.location.href = "/view/skill"
-      },
-      error: function (e) {
-        Swal.fire(e.responseJSON.message);
-      }
-    })
-  }
-
 </script>
 <body>
 <div class="d-flex" id="wrapper">
@@ -90,7 +77,7 @@
                 <div class="modal-body" style="height: 50%">
                   <select class="form-select" size="3" aria-label="Size 3 select example"
                           th:name="elementType" style="height: 100px;">
-                    <option th:each="val : ${elementType}" th:selected="${val?.code == skill.getSkillElementType.name()}" th:value="${val.code}" th:utext="${val?.name}"></option>
+                    <option th:each="val : ${elementType}" th:selected="${val?.code == skill.getElementType.name()}" th:value="${val.code}" th:utext="${val?.name}"></option>
                   </select>
                 </div>
                 <div class="modal-footer">
@@ -256,7 +243,6 @@
           </div>
         </div>
         <button type="button" class="btn btn-primary" th:onclick="update([[${skill.id}]])">저장</button>
-        <button type="button" class="btn btn-primary" th:onclick="remove([[${skill.id}]])">삭제</button>
       </form>
     </div>
   </div>

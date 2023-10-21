@@ -28,7 +28,7 @@ public class SkillController {
 	@GetMapping("/view/skill")
 	public ModelAndView viewSkill(ModelAndView modelAndView,
 								  PagableDto.Request request) {
-		modelAndView.setViewName("/skill/skill");
+		modelAndView.setViewName("skill/skill");
 		modelAndView.addObject("pageable", skillService.getSkillList(request));
 		return modelAndView;
 	}

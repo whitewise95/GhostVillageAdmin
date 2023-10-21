@@ -3,10 +3,12 @@ package com.example.ghostvillageadmin.app.skill.domain.enums;
 import com.example.ghostvillageadmin.app.skill.dto.EnumDto;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 /**
  * 속성타입
  */
+@Getter
 public enum SkillElementType {
 	FIRE("불", 1),
 	WATER("물", 2),

@@ -25,6 +25,7 @@ public class Equipment extends BaseDomainWithId {
 
     @NotNull
     @Comment("등급")
+    @Enumerated(EnumType.STRING)
     private EquipmentRankType rankType;
 
     @NotNull
@@ -44,11 +45,13 @@ public class Equipment extends BaseDomainWithId {
      * 속성 목록
      * */
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("id asc")
     private Set<EquipmentElement> equipmentElementList = new HashSet<>();
 
     /**
      * 스탯 목록
      * */
+    @OrderBy("id asc")
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<EquipmentStat> equipmentStatList = new HashSet<>();
 }

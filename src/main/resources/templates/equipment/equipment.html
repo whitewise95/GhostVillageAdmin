@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header::header"></head>
 <script>
   let totalPages = [[${pageable.pageTotal}]]
@@ -9,7 +9,7 @@
   });
 
   function detail(id) {
-    window.location.href = "/view/skill/detail/" + id;
+    window.location.href = "/view/equipment/detail/" + id;
   }
 
   function page() {
@@ -24,16 +24,17 @@
         first: '«', // First Button Label
         last: '»', // Last Button Label
         onPageClick: function (event, page) {
-          window.location.href = "/view/skill?page=" + page;
+          window.location.href = "/view/equipment?page=" + page;
         }
       });
     }
   }
 
+
   function remove(id) {
     $.ajax({
       type: "DELETE",
-      url: "/api/skill/" + id,
+      url: "/api/equipment/" + id,
       success: function (response) {
         window.location.reload();
       },
@@ -48,23 +49,22 @@
 <div class="d-flex" id="wrapper">
   <div th:replace="layout/side::side"></div>
   <div id="page-content-wrapper">
+    <!-- Top navigation-->
     <nav th:replace="layout/top::top"></nav>
     <div class="container-fluid">
-      <h1 class="mt-4">CMS SKILL</h1>
-      <button type="button" class="btn btn-success" onclick="location.href='/view/skill/create'">
+      <h1 class="mt-4">CMS EQUIPMENT</h1>
+      <button type="button" class="btn btn-success" onclick="location.href='/view/equipment/create'">
         등록
       </button>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
           <tr class="table-warning">
-            <td>스킬 고유번호</td>
-            <td>스킬명</td>
-            <td>스킬 이펙트 ID</td>
-            <td>스킬 등급</td>
-            <td>코스트</td>
-            <td>스킬 속성</td>
-            <td>능력치 유형</td>
+            <td>장비 고유번호</td>
+            <td>장비명</td>
+            <td>장비 이미지 ID</td>
+            <td>장비 등급</td>
+            <td>최종 강화 효과 타입</td>
             <td></td>
           </tr>
           </thead>
@@ -72,17 +72,14 @@
           <tr th:each="list : ${pageable.results}" th:onclick="detail([[${list.id}]])">
             <td><span th:text="${list.id}"></span></td>
             <td><span th:text="${list.name}"></span></td>
-            <td><span th:text="${list.effectId}"></span></td>
-            <td><span th:text="${list.rank}"></span></td>
-            <td><span th:text="${list.coast}"></span></td>
-            <td><span th:text="${list.getElementType()}"></span></td>
-            <td><span th:text="${list.statsType}"></span></td>
+            <td><span th:text="${list.image_id}"></span></td>
+            <td><span th:text="${list.rank_type}"></span></td>
+            <td><span th:text="${list.getLast_type().getLabel()}"></span></td>
             <td><button type="button" class="btn btn-primary" th:onclick="remove([[${list.id}]])">삭제</button></td>
           </tr>
           </tbody>
         </table>
       </div>
-
       <div class="paging-div">
         <ul class="pagination" id="pagination">
 

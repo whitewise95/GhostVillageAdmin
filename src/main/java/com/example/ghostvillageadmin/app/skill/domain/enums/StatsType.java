@@ -3,10 +3,12 @@ package com.example.ghostvillageadmin.app.skill.domain.enums;
 import com.example.ghostvillageadmin.app.skill.dto.EnumDto;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 /**
  * 능력치 타입
  */
+@Getter
 public enum StatsType {
 	DAMAGE(1, "데미지"),
 	PASS_DAMAGE(2, "방어 관통"),
@@ -29,7 +31,7 @@ public enum StatsType {
 	DAMAGE_UP_AND_RANGE_UP(19, "데미지 증가 & 범위 증가"),
 	MANA_RECOVERY_UP(20, "마나 회복 속도 증가"),
 	COOL_DOWN_UP_AND_MANA_RECOVERY_UP(21, "쿨타임 감소 & 마나 회복 속도 증가"),
-	FAST_AND_CURE_UP_AND_MANA_RECOVERY_UP(22, "이속 증가 & 체력 회복 속도 증가"),
+	FAST_AND_CURE_UP_AND_MANA_RECOVERY_UP(22, "이속 증가 & 체력 회복 속도 증가 & 마나 회복 속도 증가"),
 	SLOW(23, "감속"),
 	DAMAGE_AND_SLOW(24, "데미지 & 이속 감소"),
 	DEFENSE_DOWN(25, "방깍"),
