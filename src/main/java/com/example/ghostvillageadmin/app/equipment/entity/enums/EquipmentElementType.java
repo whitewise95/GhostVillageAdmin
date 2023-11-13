@@ -13,7 +13,9 @@ public enum EquipmentElementType {
     FIRE("불", 1),
     WATER("물", 2),
     ELECTRIC("전기", 3),
-    LAND("땅", 4);
+    LAND("땅", 4),
+    EXTRA("미포함", 5),
+    ALL("전체", 6);
 
     private final String label;
     private final Integer sort;
