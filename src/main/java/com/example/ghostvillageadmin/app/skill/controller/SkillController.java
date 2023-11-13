@@ -69,7 +69,7 @@ public class SkillController {
 	}
 
 	@ResponseBody
-	@Operation(summary = "스킬 수정")
+	@Operation(summary = "스킬 삭제")
 	@DeleteMapping("/api/skill/{id}")
 	public void delete(@PathVariable Long id) {
 		skillService.delete(id);

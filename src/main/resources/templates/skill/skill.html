@@ -61,6 +61,7 @@
           <thead>
           <tr class="table-warning">
             <td>스킬 고유번호</td>
+            <td>스킬 동적번호</td>
             <td>스킬명</td>
             <td>스킬 이펙트 ID</td>
             <td>스킬 등급</td>
@@ -73,6 +74,7 @@
           <tbody>
           <tr th:each="list : ${pageable.results}" th:onclick="detail([[${list.id}]])">
             <td><span th:text="${list.id}"></span></td>
+            <td><span th:text="${list.dynamicId}"></span></td>
             <td><span th:text="${list.name}"></span></td>
             <td><span th:text="${list.effectId}"></span></td>
             <td><span th:text="${list.rank}"></span></td>

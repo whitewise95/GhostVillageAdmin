@@ -45,5 +45,6 @@ public interface EquipmentDtoMapper {
 	void updateElement(EquipmentDto.CreateOrUpdateElement createOrUpdateElement, @MappingTarget EquipmentElement equipmentElement);
 
 
+	@Mapping(target = "statIncrease", source = "statAdd")
 	void updateStats(EquipmentDto.CreateOrUpdateStats createOrUpdateStats, @MappingTarget EquipmentStat equipmentStat);
 }

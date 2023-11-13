@@ -20,6 +20,9 @@ public class SkillDto {
 		@Schema(description = "스킬명")
 		private String name;
 
+		@Schema(description = "스킬동적번호")
+		private String dynamicId;
+
 		@Schema(description = "스킬 이펙트 ID")
 		private Integer effectId;
 
@@ -107,6 +110,10 @@ public class SkillDto {
 		@NotNull(message = "스킬 이펙트 ID를 입력해주세요.")
 		@Schema(description = "스킬 이펙트 ID")
 		private Integer effectId;
+
+		@NotNull(message = "스킬 동적 번호를 입력해주세요.")
+		@Schema(description = "스킬 동적 번호")
+		private Long dynamicId;
 
 		@NotNull(message = "스킬등급을 입력해주세요.")
 		@Schema(description = "스킬 등급")

@@ -3,7 +3,12 @@ package com.example.ghostvillageadmin.app.skill.domain;
 import com.example.ghostvillageadmin.app.skill.domain.enums.SkillElementType;
 import com.example.ghostvillageadmin.app.skill.domain.enums.StatsType;
 import com.example.ghostvillageadmin.base.BaseDomainWithId;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +31,11 @@ public class Skill extends BaseDomainWithId {
 	@NotNull
 	@Comment("이펙트 아이디 (외래키x)")
 	private Integer effectId;
+
+	@NotNull
+	@Column(unique = true)
+	@Comment("스킬 동적 아이디 (외래키x)")
+	private Long dynamicId;
 
 	@NotNull
 	@Comment("스킬랭크")
