@@ -24,6 +24,9 @@ public class EquipmentDto {
 		@Schema(description = "장비 고유 번호")
 		private Long id;
 
+		@Schema(description = "장비 동적 번호")
+		private Long dynamicId;
+
 		@Schema(description = "장비명")
 		private String name;
 
@@ -46,6 +49,9 @@ public class EquipmentDto {
 
 		@Schema(description = "장비명")
 		private String name;
+
+		@Schema(description = "장비 동적 번호")
+		private Long dynamicId;
 
 		@Schema(description = "등급")
 		private EquipmentRankType rank_type;
@@ -120,6 +126,10 @@ public class EquipmentDto {
 		@NotNull(message = "등급을 선택해주세요.")
 		@Schema(description = "등급")
 		private EquipmentRankType rankType;
+
+		@NotNull(message = "장비 동적 번호를 입력해주세요.")
+		@Schema(description = "장비 동적 번호")
+		private Long dynamicId;
 
 		@NotNull(message = "이미지고유번호를 입력해주세요.")
 		@Schema(description = "이미지고유번호")

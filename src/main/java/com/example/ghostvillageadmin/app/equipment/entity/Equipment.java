@@ -29,6 +29,11 @@ public class Equipment extends BaseDomainWithId {
     private EquipmentRankType rankType;
 
     @NotNull
+    @Column(unique = true)
+    @Comment("장비 동적 아이디 (외래키x)")
+    private Long dynamicId;
+
+    @NotNull
     @Comment("이미지고유번호 외래키x")
     private Integer imageId;
 
