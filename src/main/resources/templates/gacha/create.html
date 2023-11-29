@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header::header"></head>
+<body>
+<div class="d-flex" id="wrapper">
+  <div th:replace="layout/side::side"></div>
+  <div id="page-content-wrapper">
+    <!-- Top navigation-->
+    <nav th:replace="layout/top::top"></nav>
+    <div class="container-fluid">
+      <h1 class="mt-4">CMS HOME</h1>
+      <form id="createForm">
+        <div style="padding-bottom: 10px">
+          <div class="mb-3 row">
+            <label for="dynamicId" class="col-sm-2 col-form-label">동적 번호</label>
+            <div class="col-sm-10">
+              <input type="input" class="form-control" id="dynamicId" name="dynamicId">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="price" class="col-sm-2 col-form-label">필요 재화량</label>
+            <div class="col-sm-10">
+              <input type="input" class="form-control" id="price" name="price">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="rankType">사용재화량</label>
+            <select class="form-select" size="3" aria-label="Size 3 select example"
+                    id="rankType" th:name="rankType" style="height: 100px;">
+              <option th:each="val : ${equipmentRankType}" th:value="${val?.code}"
+                      th:utext="${val?.name}"></option>
+            </select>
+          </div>                                <div class="mb-3 row">
+          <label for="rankType">등급</label>
+          <select class="form-select" size="3" aria-label="Size 3 select example"
+                  id="rankType" th:name="rankType" style="height: 100px;">
+            <option th:each="val : ${equipmentRankType}" th:value="${val?.code}"
+                    th:utext="${val?.name}"></option>
+          </select>
+        </div>                                <div class="mb-3 row">
+          <label for="rankType">등급</label>
+          <select class="form-select" size="3" aria-label="Size 3 select example"
+                  id="rankType" th:name="rankType" style="height: 100px;">
+            <option th:each="val : ${equipmentRankType}" th:value="${val?.code}"
+                    th:utext="${val?.name}"></option>
+          </select>
+        </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

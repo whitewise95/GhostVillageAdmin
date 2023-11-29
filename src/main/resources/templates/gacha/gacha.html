@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header::header"></head>
+<script>
+</script>
+<body>
+<div class="d-flex" id="wrapper">
+    <div th:replace="layout/side::side"></div>
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <nav th:replace="layout/top::top"></nav>
+        <div class="container-fluid">
+            <h1 class="mt-4">가차</h1>
+            <button type="button" class="btn btn-success" onclick="location.href='/view/gacha/create'">
+                등록
+            </button>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="table-warning">
+                        <td>고유번호</td>
+                        <td>가차 동적 고유번호</td>
+                        <td>사용재화</td>
+                        <td>필요 재화량</td>
+                        <td>보상</td>
+                        <td>가챠시트</td>
+                        <td><button type="button" class="btn btn-primary" th:onclick="remove()">삭제</button></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging-div">
+                <ul class="pagination" id="pagination">
+
+                </ul>
+            </div>
+        </div>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

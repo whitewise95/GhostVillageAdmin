@@ -14,7 +14,7 @@ public enum EnforceLastType {
 	SPEED_UP("이동속도 증가", 2),
 	RESISTANCE_UP("방어력 증가", 3),
 	TIME_STRETCH("(설치물 및 지속시간 1초 이상)지속시간 증가", 4),
-	HEALING_UP("(회복력 증가)지속시간 증가", 5),
+	HEALING_UP("회복력 증가", 5),
 	LUCKUP("(패시브 스킬 갯수 및 아이템 획득률)행운 증가", 6),
 	MANA_UP("마나 사용량 감소", 7),
 	COOL_DOWN("30초마다 모든 쿨타임 감소", 8),
